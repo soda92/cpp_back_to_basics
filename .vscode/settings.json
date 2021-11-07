@@ -2,5 +2,11 @@
     "cmake.configureSettings": {
         "CMAKE_TOOLCHAIN_FILE": "D:/src/vcpkg/scripts/buildsystems/vcpkg.cmake"
     },
-    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "files.associations": {
+        "*.gradle": "groovy",
+        "*.json": "jsonc",
+        "*.spec": "ruby",
+        "limits": "cpp"
+    }
 }
