@@ -7,11 +7,12 @@ double factorial(int n) {
     for (int i = 1; i <= n; i++) {
         ret *= i;
         if (ret > std::numeric_limits<int>::max() && !int_fl) {
-            std::cout << "max factorial that int can store: " << i-1 << "\n";
+            std::cout << "max factorial that int can store: " << i - 1 << "\n";
             int_fl = true;
         }
         if (ret > std::numeric_limits<double>::max()) {
-            std::cout << "max factorial that double can store: " << i-1 << "\n";
+            std::cout << "max factorial that double can store: " << i - 1
+                      << "\n";
             break;
         }
     }
