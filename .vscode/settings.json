@@ -1,12 +1,19 @@
 {
     "cmake.configureSettings": {
-        "CMAKE_TOOLCHAIN_FILE": "D:/src/vcpkg/scripts/buildsystems/vcpkg.cmake"
+        "CMAKE_TOOLCHAIN_FILE": "D:/src/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "cmake.generator": "Ninja",
     "files.associations": {
         "*.gradle": "groovy",
         "*.json": "jsonc",
         "*.spec": "ruby",
-        "limits": "cpp"
-    }
+        "limits": "cpp",
+        "concepts": "cpp",
+        "ranges": "cpp",
+        "xstring": "cpp"
+    },
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
 }
