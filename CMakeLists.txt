@@ -29,3 +29,6 @@ target_link_libraries(ranges PRIVATE fmt::fmt range-v3 range-v3-meta range-v3::m
 
 add_executable(deleted_methods deleted_methods.cpp)
 target_link_libraries(deleted_methods PRIVATE fmt::fmt)
+
+add_executable(hello_world hello_world.cpp)
+
