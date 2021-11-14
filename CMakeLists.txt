@@ -26,4 +26,3 @@ target_link_libraries(deleted_methods PRIVATE fmt::fmt)
 add_executable(hello_world hello_world.cpp)
 add_executable(any std_any.cpp)
 
-# add_executable(events EventEmitter.h main.cpp)
