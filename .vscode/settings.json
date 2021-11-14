@@ -13,6 +13,7 @@
         "concepts": "cpp",
         "ranges": "cpp",
         "xstring": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "any": "cpp"
     }
 }
