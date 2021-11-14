@@ -1,4 +1,6 @@
 
+#include<iostream>
+
 class S {
    private:
     int _val;
