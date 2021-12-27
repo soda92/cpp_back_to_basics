@@ -4,6 +4,7 @@ project(cpp_back_to_basics)
 find_package(fmt CONFIG REQUIRED)
 find_package(FLTK CONFIG REQUIRED)
 find_package(range-v3 CONFIG REQUIRED)
+find_package(Boost REQUIRED)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -27,3 +28,7 @@ add_executable(hello_world hello_world.cpp)
 add_executable(any std_any.cpp)
 
 add_executable(test_string test_string.cpp)
+
+add_executable(enable_if enable_if.cpp)
+target_include_directories(enable_if BEFORE PUBLIC ${Boost_INCLUDE_DIRS})
+# target_link_libraries(enable_if PRIVATE Boost::boost)
