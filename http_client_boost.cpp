@@ -18,6 +18,7 @@ namespace http = beast::http;    // from <boost/beast/http.hpp>
 namespace net = boost::asio;     // from <boost/asio.hpp>
 using tcp = net::ip::tcp;        // from <boost/asio/ip/tcp.hpp>
 
+// from: https://www.sindsun.com/articles/16/136
 string utf8_to_gbk(string src) {
     auto src_str = src.c_str();
     int len = MultiByteToWideChar(CP_UTF8, 0, src_str, -1, NULL, 0);
