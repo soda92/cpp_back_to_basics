@@ -32,3 +32,6 @@ add_executable(test_string test_string.cpp)
 add_executable(enable_if enable_if.cpp)
 target_include_directories(enable_if BEFORE PUBLIC ${Boost_INCLUDE_DIRS})
 # target_link_libraries(enable_if PRIVATE Boost::boost)
+
+add_executable(http_client_boost http_client_boost.cpp)
+target_link_libraries(http_client_boost PRIVATE Boost::boost fmt::fmt)
