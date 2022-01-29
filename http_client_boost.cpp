@@ -6,12 +6,14 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <chrono>
 #include <fmt/core.h>
 #include <vector>
 extern "C" {
 #include "windows.h"
 }
 using namespace std;
+using namespace std::chrono;
 
 namespace beast = boost::beast;  // from <boost/beast.hpp>
 namespace http = beast::http;    // from <boost/beast/http.hpp>
@@ -20,6 +22,7 @@ using tcp = net::ip::tcp;        // from <boost/asio/ip/tcp.hpp>
 
 // from: https://www.sindsun.com/articles/16/136
 string utf8_to_gbk(string src) {
+    auto t0 = steady_clock::now();
     auto src_str = src.c_str();
     int len = MultiByteToWideChar(CP_UTF8, 0, src_str, -1, NULL, 0);
     wchar_t* wszGBK = new wchar_t[len + 1];
@@ -38,8 +41,9 @@ string utf8_to_gbk(string src) {
 
 // Performs an HTTP GET and prints the response
 int main(int argc, char** argv) {
+    auto t0 = steady_clock::now();
     try {
-        auto const host = "localhost";
+        auto const host = "127.0.0.1";
         auto const port = "5000";
         auto const target = "/test/zh_hans";
         int version = 11;
@@ -53,9 +57,15 @@ int main(int argc, char** argv) {
 
         // Look up the domain name
         auto const results = resolver.resolve(host, port);
+        fmt::print(
+            "resolve time elpased: {}ms\n",
+            duration_cast<milliseconds>(steady_clock::now() - t0).count());
 
         // Make the connection on the IP address we get from a lookup
         stream.connect(results);
+        fmt::print(
+            "connect time elpased: {}ms\n",
+            duration_cast<milliseconds>(steady_clock::now() - t0).count());
 
         // Set up an HTTP GET request message
         http::request<http::string_body> req{http::verb::get, target, version};
@@ -64,6 +74,9 @@ int main(int argc, char** argv) {
 
         // Send the HTTP request to the remote host
         http::write(stream, req);
+        fmt::print(
+            "send header time elpased: {}ms\n",
+            duration_cast<milliseconds>(steady_clock::now() - t0).count());
 
         // This buffer is used for reading and must be persisted
         beast::flat_buffer buffer;
@@ -73,21 +86,24 @@ int main(int argc, char** argv) {
 
         // Receive the HTTP response
         http::read(stream, buffer, res);
-
+        fmt::print(
+            "read response time elpased: {}ms\n",
+            duration_cast<milliseconds>(steady_clock::now() - t0).count());
 
         // Write the message to standard out
 
-        auto str = res.body();
-        std::cout << str << std::endl;
-        string str2{"中文"};
-        std::cout << str2 << std::endl;
-        std::cout << Utf8ToGbk(str2.c_str()) << std::endl;
-
-        std::cout << res << std::endl;
+        string str = res.body();
+        string str2 = utf8_to_gbk(str);
+        fmt::print(
+            "convert time elpased: {}ms\n",
+            duration_cast<milliseconds>(steady_clock::now() - t0).count());
 
         // Gracefully close the socket
         beast::error_code ec;
         stream.socket().shutdown(tcp::socket::shutdown_both, ec);
+        fmt::print(
+            "shutdown time elpased: {}ms\n",
+            duration_cast<milliseconds>(steady_clock::now() - t0).count());
 
         // not_connected happens sometimes
         // so don't bother reporting it.
