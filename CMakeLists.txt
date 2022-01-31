@@ -36,3 +36,28 @@ target_include_directories(enable_if BEFORE PUBLIC ${Boost_INCLUDE_DIRS})
 
 add_executable(http_client_boost http_client_boost.cpp)
 target_link_libraries(http_client_boost PRIVATE Boost::boost fmt::fmt)
+
+#  PATHS "C:/Qt/5.12.12/msvc2022-static/lib/cmake"
+#  PATHS "C:/Qt/5.12.12/msvc2022-dynamic/lib/cmake"
+# ²Î¿¼£º https://stackoverflow.com/a/49816516/12291425
+find_package(Qt5 COMPONENTS Widgets Network REQUIRED PATHS "C:/Qt/5.12.12/msvc2022-dynamic/lib/cmake" NO_DEFAULT_PATH)
+
+
+set(CMAKE_AUTOMOC ON)
+add_executable(test_qt test_qt.cpp)
+target_link_libraries(test_qt PRIVATE Qt5::Widgets Qt5::Network fmt::fmt)
+# https://stackoverflow.com/a/40572207/12291425
+add_custom_command(
+    TARGET test_qt POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_FILE:Qt5::Widgets>
+        $<TARGET_FILE:Qt5::Core>
+        $<TARGET_FILE:Qt5::Network>
+        $<TARGET_FILE_DIR:test_qt>
+)
+
+add_executable(http_server_sync http_server_sync.cpp)
+target_link_libraries(http_server_sync PRIVATE Boost::boost)
+
+add_executable(lambda_test lambda_test.cpp)
+target_link_libraries(lambda_test PRIVATE fmt::fmt)
