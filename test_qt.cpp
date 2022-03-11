@@ -9,7 +9,7 @@
 #include <fmt/core.h>
 
 
-// ²Î¿¼£º https://stackoverflow.com/a/4182144/12291425
+// https://stackoverflow.com/a/4182144/12291425
 
 class MyNetworkTest : public QObject {
     Q_OBJECT
